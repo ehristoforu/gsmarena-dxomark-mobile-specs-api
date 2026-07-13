@@ -8,8 +8,9 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178c6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-339933?logo=node.js&logoColor=white)](https://nodejs.org/)
 [![Fastify](https://img.shields.io/badge/Fastify-5.7-000000?logo=fastify)](https://fastify.dev/)
-[![pnpm](https://img.shields.io/badge/pnpm-9.15-F69220?logo=pnpm&logoColor=white)](https://pnpm.io/)
+[![npm](https://img.shields.io/badge/npm-10+-CB3837?logo=npm&logoColor=white)](https://www.npmjs.com/)
 [![Vercel](https://img.shields.io/badge/Deploy%20on-Vercel-black?logo=vercel)](https://vercel.com/)
+[![Netlify](https://img.shields.io/badge/Deploy%20on-Netlify-00C7B7?logo=netlify&logoColor=white)](https://www.netlify.com/)
 
 
 <br/>
@@ -101,13 +102,13 @@ It also surfaces **official press renders per color variant**, **in-article revi
 
 ## Quick Start
 
-**Prerequisites:** Node.js 18+ · pnpm
+**Prerequisites:** Node.js 18+ · npm
 
 ```bash
 git clone https://github.com/Sanjeevu-Tarun/gsmarena-dxomark-mobile-specs-api
 cd gsmarena-dxomark-mobile-specs-api
-pnpm install
-pnpm dev
+npm install
+npm run dev
 # → http://localhost:4000
 ```
 
@@ -124,10 +125,27 @@ vercel deploy
 
 `vercel.json` is pre-configured. Zero extra setup required.
 
+### Deploy to Netlify
+
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/ehristoforu/gsmarena-dxomark-mobile-specs-api)
+
+Or via CLI:
+
+```bash
+npm install -g netlify-cli
+netlify init
+netlify deploy --prod
+```
+
+Build command for Netlify: `npm run build`
+Functions directory: `netlify/functions`
+
+`netlify.toml` is pre-configured. All routes are automatically redirected to the serverless function.
+
 ### Running Tests
 
 ```bash
-pnpm test
+npm test
 ```
 
 The test suite covers route handlers, cache layer behavior (`mem` / `redis` / `miss`), search penalty scoring, and DXOMark score parsing. All tests run against a local mock server — no live scraping occurs during CI.
@@ -571,6 +589,11 @@ See [Cache Behavior](#cache-behavior) for a full explanation of the dual-layer s
 ```
 ├── api/
 │   └── index.ts                     # All Fastify routes + Vercel handler + dev server
+├── netlify/
+│   └── functions/
+│       └── api.ts                   # Netlify serverless function handler
+├── netlify.toml                     # Netlify build config + redirects
+├── vercel.json                      # Vercel build config
 └── src/
     ├── cache.ts                     # Redis (Upstash) + in-memory LRU with cacheGetWithSource()
     ├── config.ts                    # Shared configuration constants
@@ -652,8 +675,8 @@ Issues and PRs are welcome. For major changes, please open an issue first to dis
 ```bash
 git clone https://github.com/Sanjeevu-Tarun/gsmarena-dxomark-mobile-specs-api
 cd gsmarena-dxomark-mobile-specs-api
-pnpm install
-pnpm dev
+npm install
+npm run dev
 ```
 
 **Submitting a PR:**
@@ -668,9 +691,9 @@ git push origin feature/your-feature
 **Before pushing**, make sure all checks pass:
 
 ```bash
-pnpm lint      # must pass with zero errors
-pnpm format    # auto-formats all source files
-pnpm test      # full test suite
+npm run lint      # must pass with zero errors
+npm run format    # auto-formats all source files
+npm test          # full test suite
 ```
 
 **Code style:** The project uses TypeScript strict mode. Keep parser modules isolated — each source (`gsmarena`, `dxomark`) has its own `parser.*.ts` file. Avoid adding cross-source dependencies inside parsers.

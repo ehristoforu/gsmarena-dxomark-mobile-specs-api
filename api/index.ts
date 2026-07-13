@@ -1978,10 +1978,12 @@ app.get('/:slug', async (request, reply) => {
   }
 });
 
+export { app };
+
 let ready = false;
 
-// ── Local dev server (skipped on Vercel) ────────────────────────────────────
-if (!process.env.VERCEL) {
+// ── Local dev server (skipped on serverless platforms) ──────────────────────
+if (!process.env.VERCEL && !process.env.NETLIFY) {
   const PORT = parseInt(process.env.PORT || '4000', 10);
   app.listen({ port: PORT, host: '0.0.0.0' }, (err, address) => {
     if (err) { console.error(err); process.exit(1); }
